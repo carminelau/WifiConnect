@@ -1,0 +1,60 @@
+branches:
+    only:
+      - master
+      - /^v?\d+\.\d+(\.\d+)?(-\S*)?$/
+      
+os: linux
+dist: trusty
+language: bash
+sudo: false
+cache:
+  directories:
+    - ~/arduino_ide
+  #  - ~/.arduino15/packages/
+before_cache:
+    - rm -rf ~/arduino_ide/hardware/esp8266com
+    - rm -rf  ~/arduino_ide/hardware/espressif
+git:
+  depth: false
+  quiet: true
+env:
+  global:
+     - PRETTYNAME="WiFi Connect"
+     - DOXYPRJBRIEF="WiFi connection manager for ESP32 and ESP8266 including OLED support"
+     - DOXYPRJVERSION="Version 1.0"
+     - DOXYPRJLOGO="extras\/WiFiConnect.png"
+# Optional, will default to "$TRAVIS_BUILD_DIR/Doxyfile"
+#    - DOXYFILE: $TRAVIS_BUILD_DIR/Doxyfile
+
+matrix:
+
+  include:
+
+    - env:
+
+      - BUILD_TYPE=build_esp8266
+      - BUILDDOXYGEN=false
+
+    - env:
+
+      - BUILD_TYPE=build_esp32
+      - BUILDDOXYGEN=true
+
+before_install:
+
+
+install:
+
+
+script:
+   - $TRAVIS_BUILD_DIR/travis/common.sh
+
+# Generate and deploy documentation
+after_success:
+  # - source <(curl -SLs  https://raw.githubusercontent.com/smurf0969/travis-ci-arduino/master/library_check.sh)
+   - source <(curl -SLs  https://raw.githubusercontent.com/smurf0969/.github/master/doxygen/doxy_gen_and_deploy.sh)
+
+notifications:
+  email:
+    on_success: change # default: change
+    on_failure: always # default: always
