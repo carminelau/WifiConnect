@@ -69,6 +69,9 @@ class WiFiConnect {
     /// Create WiFiConnect class
     WiFiConnect();
 
+    String _ssid      = "                            "; ///< Tempory holder for the network ssid
+    String _password  = "                            "; ///< Tempory holder for the network password
+    
     boolean startConfigurationPortal();
     boolean startConfigurationPortal(AP_Continue apcontinue);
     boolean startConfigurationPortal(AP_Continue apcontinue, const char*  apName, const char*  apPassword = NULL, bool paramsMode = false);
@@ -138,8 +141,7 @@ class WiFiConnect {
     int _minimumQuality = 8; ///< The minimum netqork quality to be included in scan results.
     int _paramsCount = 0; ///< The amount of custom parameters added via addParameter
     boolean _readyToConnect = false; ///< Flag used in access point to determine if it should try to connect to the network.
-    String _ssid      = "                            "; ///< Tempory holder for the network ssid
-    String _password  = "                            "; ///< Tempory holder for the network password
+    
 
     WiFiConnectParam* _params[WiFiConnect_MAX_PARAMS]; ///< Array to hold custom parameters
 
